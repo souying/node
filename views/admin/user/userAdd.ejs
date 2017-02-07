@@ -1,0 +1,113 @@
+<% include ../header %>
+<div class="main-content">
+	<div class="breadcrumbs" id="breadcrumbs">
+		<script type="text/javascript">
+			try{ace.settings.check('breadcrumbs' , 'fixed')}catch(e){}
+		</script>
+
+		<ul class="breadcrumb">
+			<li>
+				<i class="icon-home home-icon"></i>
+				<a href="/admin">首页</a>
+			</li>
+			<li class="active">用户添加</li>
+		</ul><!-- .breadcrumb -->
+
+		<div class="nav-search" id="nav-search">
+			<form class="form-search">
+				<span class="input-icon">
+					<input type="text" placeholder="Search ..." class="nav-search-input" id="nav-search-input" autocomplete="off" />
+					<i class="icon-search nav-search-icon"></i>
+				</span>
+			</form>
+		</div><!-- #nav-search -->
+	</div>
+
+	<div class="step-content row-fluid position-relative" id="step-container">
+		<div class="step-pane active" id="step1">
+			<h3 class="lighter block green">用户添加</h3>
+			<% if(errMsg.length){ %> 
+				<p class="alert alert-danger"><%= errMsg %></p>
+			<% } %>
+			<form class="form-horizontal" action="/admin/userdoAdd" method="post">
+				<div style="height:35px;" class="form-group">
+					<label for="inputError2" class="col-xs-12 col-sm-3 control-label no-padding-right">用户名</label>
+					<div class="col-xs-12 col-sm-5">
+						<span class="input-icon block">
+							<input type="text" id="inputError2" class="width-100" name="uname" />
+						</span>
+					</div>
+				</div>
+
+				<div style="height:35px;" class="form-group">
+					<label for="inputError2" class="col-xs-12 col-sm-3 control-label no-padding-right">密码</label>
+					<div class="col-xs-12 col-sm-5">
+						<span class="input-icon block">
+							<input type="text" id="inputError2" readonly class="width-100" value="123456" name="upwd"/>
+						</span>
+					</div>
+				</div>
+				<div style="height:35px;" class="form-group">
+					<label for="inputError2" class="col-xs-12 col-sm-3 control-label no-padding-right">邮箱</label>
+					<div class="col-xs-12 col-sm-5">
+						<span class="input-icon block">
+							<input type="email" id="inputError2" class="width-100" name="email" />
+						</span>
+					</div>
+				</div>
+				<div style="height:35px;" class="form-group">
+					<label for="inputError2" class="col-xs-12 col-sm-3 control-label no-padding-right">个性签名</label>
+					<div class="col-xs-12 col-sm-5">
+						<span class="input-icon block">
+							<input type="text" id="inputError2" class="width-100" name="des"/>
+						</span>
+					</div>
+				</div>
+				<div style="height:35px;" class="form-group">
+					<label for="inputError2" class="col-xs-12 col-sm-3 control-label no-padding-right">积分</label>
+					<div class="col-xs-12 col-sm-5">
+						<span class="input-icon block">
+							<input type="number" id="inputError2" class="width-100" placeholder="" name="gold" />
+						</span>
+					</div>
+				</div>
+				<div style="height:35px;" class="form-group">
+					<label for="inputError2" class="col-xs-12 col-sm-3 control-label no-padding-right">年龄</label>
+					<div class="col-xs-12 col-sm-5">
+						<span class="input-icon block">
+							<input type="number" id="inputError2" class="width-100" name="age"/>
+						</span>
+					</div>
+				</div>
+				<div style="height:35px;" class="form-group">
+					<label for="inputError2" class="col-xs-12 col-sm-3 control-label no-padding-right">性别</label>
+					<label class="radio-inline col-md-offset-1">
+					  <input type="radio" id="inlineRadio1" name="sex" value="1"> 男
+					</label>
+					<label class="radio-inline col-md-offset-2">
+					  <input type="radio" id="inlineRadio1" name="sex" value="2"> 女
+					</label>
+					<label class="radio-inline col-md-offset-2">
+					  <input type="radio" id="inlineRadio1" checked name="sex" value="3"> 保密
+					</label>
+				</div>
+				<div style="height:35px;" class="form-group">
+					<label for="inputError2" class="col-xs-12 col-sm-3 control-label no-padding-right">网站权限</label>
+					<label class="radio-inline col-md-offset-1">
+					  <input type="radio" id="inlineRadio1" checked name="level" value="0"> 普通会员
+					</label>
+					<label class="radio-inline col-md-offset-2">
+					  <input type="radio" id="inlineRadio1" name="level" value="1"> 管理员
+					</label>
+				</div>
+				<div class="form-group">
+                    <div class="col-md-offset-6 col-md-4">
+                        <button class="btn btn-success">保存</button>
+                         <input type="reset" class="btn btn-danger" value="清空数据">
+                    </div>
+                </div>
+			</form>
+		</div>
+	</div>
+</div><!-- /.main-content -->
+<% include ../footer %>

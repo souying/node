@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title><%= webData.webName %><%= title %></title>
+	<meta name="description" content="<%= webData.webDescription %>" />
+	<meta name="keywords" content="<%= webData.webKeywords %>" />
+
+	<link rel="stylesheet" href="/css/bootstrap.min.css">
+	<link rel="stylesheet" href="/css/common.css">
+	<link rel="stylesheet" href="/css/jquery.atwho.css">
+	<link rel="stylesheet" href="/css/responsive.css">
+	<link rel="stylesheet" href="/css/style.css">
+	<script src="/js/jquery-2.1.0.js"></script>
+	<script src="/js/bootstrap.min.js"></script>
+</head>
+<body>
+	<!-- 顶部导航条 -->
+	<div class="navbar">
+		<div class="navbar-inner">
+			<div class="container">
+				<!-- logo位置 -->
+				<a href="/" class="brand">
+					<img src="/img/cnodejs_light.svg" alt="">
+				</a>
+
+				<!-- 搜索框 -->
+				<form action="" class="navbar-search">
+					<input type="search" class="search-query span3">
+				</form>
+
+				<!-- 右侧导航 -->
+				<ul class="nav pull-right">
+			        <li><a href="/">首页</a></li>
+			        
+			        <li><a href="/getstart">新手入门</a></li>
+			        <li><a href="/api">API</a></li>
+			        
+			        <li><a href="/about" target="">关于</a></li>
+			        
+			        
+			        <!-- 判断用户是否登录  -->
+			        <% if(user){ %>
+						<li><a href="/user/ucenter">设置</a></li>
+			       		<li><a href="/user/doLogout">退出</a></li>
+			        <% }else{ %> 
+						<li><a href="/user/reg">注册</a></li>
+			       		<li><a href="/user/login">登录</a></li>
+			        <% } %>
+			     </ul>
+			</div>
+		</div>
+	</div>

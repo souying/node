@@ -1,0 +1,260 @@
+<!-- 引入头部 -->
+<% include ../header %>
+	
+<div class="main-content">
+	<div class="breadcrumbs" id="breadcrumbs">
+		<script type="text/javascript">
+			try{ace.settings.check('breadcrumbs' , 'fixed')}catch(e){}
+		</script>
+
+		<ul class="breadcrumb">
+			<li>
+				<i class="icon-home home-icon"></i>
+				<a href="#">首页</a>
+			</li>
+
+			<li>
+				<a href="#">用户模块</a>
+			</li>
+			<li class="active">查看用户</li>
+		</ul><!-- .breadcrumb -->
+
+		<div class="nav-search" id="nav-search">
+			<form class="form-search">
+				<span class="input-icon">
+					<input type="text" placeholder="Search ..." class="nav-search-input" id="nav-search-input" autocomplete="off" />
+					<i class="icon-search nav-search-icon"></i>
+				</span>
+			</form>
+		</div><!-- #nav-search -->
+	</div>
+
+	<div class="page-content">
+		<div class="page-header">
+			<h1>
+				用户模块
+				<small>
+					<i class="icon-double-angle-right"></i>
+					用户列表
+				</small>
+			</h1>
+		</div><!-- /.page-header -->
+
+		<div class="row">
+			<div class="col-xs-12">
+				<!-- PAGE CONTENT BEGINS -->
+
+				<div class="row">
+					<div class="col-xs-12">
+						<div class="table-responsive">
+							<table id="sample-table-1" class="table table-striped table-bordered table-hover">
+								<thead>
+									<tr>
+										<th class="center">
+											<label>
+												<input type="checkbox" class="ace" />
+												<span class="lbl"></span>
+											</label>
+										</th>
+										<th>头像</th>
+										<th>账户</th>
+										<th>状态</th>
+										<th>等级</th>
+										<th>金币</th>
+										<th>邮箱</th>
+										<th>性别</th>
+										<th>年龄</th>
+										<th>小黑屋</th>
+										<th class="hidden-480">编辑</th>
+									</tr>
+								</thead>
+
+								<tbody>
+									<% userData.forEach(function(user){ %> 
+									<tr>
+										<td class="center">
+											<label>
+												<input type="checkbox" class="ace" />
+												<span class="lbl"></span>
+											</label>
+										</td>
+
+										<td>
+											<!-- 判断是否有默认头像 -->
+											<% if(user.upic){ %>
+												<img height="30" width="30" src="/uploads/<%= user.upic%>" alt="">
+											<%}else{ %>
+												<img height="30" src="/uploads/default.png" alt="">
+											<%} %>
+											
+										</td>
+										<td>
+											<a href="/admin/userEdit?_id=<%= user._id %>"><%= user.uname %></a>
+										</td>
+										<td class="hidden-480">
+											<div class="visible-md visible-lg hidden-sm hidden-xs btn-group">
+												<span class="btn btn-xs <%= user.isActive==1?'btn-info':'btn-danger' %>"><%= user.isActive==1?'已激活':'未激活' %></span>
+											</div>
+										</td>
+
+										
+										<td>
+											<%= user.level==1?'管理员':'普通会员' %>
+										</td>
+										<td><%= user.gold %></td>
+										<td class="hidden-480"><%= user.email %></td>
+
+										<!-- 定义获取性别的函数 -->
+										<%
+											function getSex(sex){
+												switch(sex){
+													case 1:
+														sex = '男';
+													break;
+													case 2:
+														sex = '女';
+													break;
+													default:
+														sex = '保密';
+													break;
+												}
+
+												// 返回
+												return sex;
+											}
+										%>
+										<td><%= getSex(user.sex) %></td>
+
+										<td class="hidden-480">
+											<%= user.age %>
+										</td align="center">
+										<td class="hidden-480">
+											<div class="visible-md visible-lg hidden-sm hidden-xs btn-group">
+												<span class="btn btn-xs <%= user.isAllow==1?'btn-info':'btn-danger' %>"><%= user.isAllow==1?'正常用户':'禁止用户' %></span>
+											</div>
+										</td>
+										<td>
+											<div class="visible-md visible-lg hidden-sm hidden-xs btn-group">
+												
+												<!-- 编辑 -->
+												<a href="/admin/userEdit?_id=<%= user._id %>" class="btn btn-xs btn-info">
+													<i class="icon-edit bigger-120"></i>
+												</a>
+												
+												<!-- 删除 -拉黑 -->
+												<% if(user.isAllow==1){ %>
+													<a href="/admin/userStop?_id=<%= user._id %>" class="btn btn-xs btn-danger">
+														<span>禁用</span>
+													
+													</a>
+												<%}else{ %>
+													<a href="/admin/userStart?_id=<%= user._id %>" class="btn btn-xs btn-success">
+														<span>启用</span>
+													
+													</a>
+												<%} %>
+												<% if(user.isip==1){ %>
+													<a href="/admin/userIpno?_id=<%= user._id %>" class="btn btn-xs btn-danger">
+														<span>封ip</span>
+													
+													</a>
+												<%}else{ %>
+													<a href="/admin/userIpyes?_id=<%= user._id %>" class="btn btn-xs btn-success">
+														<span>解封</span>
+													
+													</a>
+												<%} %>
+												
+											</div>
+
+										</td>
+									</tr>
+									<%}) %>
+									
+
+								</tbody>
+							</table>
+
+
+						</div><!-- /.table-responsive -->
+					</div><!-- /span -->
+				</div><!-- /row -->
+
+				<!-- 分页 -->
+				<div class="row">
+					<div class="col-md-6 pull-right">
+						<div class="dataTables_paginate paging_bootstrap">
+							<div  current_page="1">
+								<ul class="pagination">
+									<li>
+										<a href="/admin/userShow?page=1">首页</a>
+									</li>
+
+									<li>
+										<!-- 当前的page为1，该位置是不允许进行单击的 -->
+										<% if(page==1){ %>
+											<a class="disabled">«</a>
+										<%}else{ %> 
+											<a href="/admin/userShow?page=<%= page-1%>">«</a>
+										<%} %>
+									</li>
+
+									<% if(page-3>0){ %> 
+										<li>
+											<a>...</a>
+										</li>
+									<%} %>
+									
+									<% for(var i=page-2;i<=parseInt(page)+2;i++){ 
+											// 小于1的隐藏
+											if(i<1){
+												continue;
+											};
+
+											// 判断是否是当前页面
+											if(parseInt(page)==i){
+									%>
+												<li class="active">
+													<a href="/admin/userShow?page=<%= i %>"><%= i %></a>
+												</li>
+									<%
+											}else{ 
+
+									%>
+												<li>
+													<a href="/admin/userShow?page=<%= i %>"><%= i %></a>
+												</li>
+									<%		}
+										} 
+									%>
+
+									<!-- +3超过了最大值 -->
+									<% if(parseInt(page)+3<=pageMax){ %> 
+										<li>
+											<a>...</a>
+										</li>
+									<%} %>
+										
+									<li>
+										<% if(page==pageMax){ %>
+											<a class="disabled">»</a>
+										<%}else{ %> 
+											<a href="/admin/userShow?page=<%= parseInt(page)+1%>">»</a>
+										<%} %>
+									</li>
+									<li>
+										<a href="/admin/userShow?page=<%= pageMax %>">尾页</a>
+									</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+
+			</div><!-- /.col -->
+		</div><!-- /.row -->
+	</div><!-- /.page-content -->
+</div><!-- /.main-content -->
+
+<!-- 引入底部 -->
+<% include ../footer %>

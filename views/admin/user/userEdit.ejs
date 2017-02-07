@@ -1,0 +1,120 @@
+<% include ../header %>
+<div class="main-content">
+	<div class="breadcrumbs" id="breadcrumbs">
+		<script type="text/javascript">
+			try{ace.settings.check('breadcrumbs' , 'fixed')}catch(e){}
+		</script>
+
+		<ul class="breadcrumb">
+			<li>
+				<i class="icon-home home-icon"></i>
+				<a href="/admin">首页</a>
+			</li>
+			<li class="active">编辑用户</li>
+		</ul><!-- .breadcrumb -->
+
+		<div class="nav-search" id="nav-search">
+			<form class="form-search">
+				<span class="input-icon">
+					<input type="text" placeholder="Search ..." class="nav-search-input" id="nav-search-input" autocomplete="off" />
+					<i class="icon-search nav-search-icon"></i>
+				</span>
+			</form>
+		</div><!-- #nav-search -->
+	</div>
+
+	<div class="step-content row-fluid position-relative" id="step-container">
+		<div class="step-pane active" id="step1">
+			<h3 class="lighter block green">用户编辑</h3>
+			<% if(errMsg.length){ %> 
+				<p class="alert alert-danger"><%= errMsg %></p>
+			<% } %>
+			<% if(succ.length){ %>
+                    <p class="alert alert-info"><%= succ %></p>
+            <%  } %>
+			<form class="form-horizontal" action="/admin/userUpdate/id" method="post" enctype="multipart/form-data">
+
+				<div style="height:35px;" class="form-group">
+					<label for="inputError2" class="col-xs-12 col-sm-3 control-label no-padding-right">用户名</label>
+					<div class="col-xs-12 col-sm-5">
+						<span class="input-icon block">
+							<input type="text" id="inputError2" class="width-100" name="uname" disabled value="<%= data.uname %>" />
+						</span>
+					</div>
+				</div>
+				<div style="height:35px;" class="form-group">
+					<label for="inputError2" class="col-xs-12 col-sm-3 control-label no-padding-right">用户头像</label>
+					<div class="col-xs-12 col-sm-5">
+						<span class="input-icon block">
+							<input type="file" id="inputError2" class="width-100" name="upic"/>
+						</span>
+					</div>
+				</div>
+				<div style="height:35px;" class="form-group">
+					<label for="inputError2" class="col-xs-12 col-sm-3 control-label no-padding-right">邮箱</label>
+					<div class="col-xs-12 col-sm-5">
+						<span class="input-icon block">
+							<input type="email" id="inputError2" class="width-100" name="email" value="<%= data.email %>" />
+						</span>
+					</div>
+				</div>
+				<div style="height:35px;" class="form-group">
+					<label for="inputError2" class="col-xs-12 col-sm-3 control-label no-padding-right">个性签名</label>
+					<div class="col-xs-12 col-sm-5">
+						<span class="input-icon block">
+							<input type="text" id="inputError2" class="width-100" name="des" value="<%= data.des %>"/>
+						</span>
+					</div>
+				</div>
+				<div style="height:35px;" class="form-group">
+					<label for="inputError2" class="col-xs-12 col-sm-3 control-label no-padding-right">积分</label>
+					<div class="col-xs-12 col-sm-5">
+						<span class="input-icon block">
+							<input type="number" id="inputError2" class="width-100" placeholder="" name="gold" value="<%= data.gold %>" />
+						</span>
+					</div>
+				</div>
+				<div style="height:35px;" class="form-group">
+					<label for="inputError2" class="col-xs-12 col-sm-3 control-label no-padding-right">年龄</label>
+					<div class="col-xs-12 col-sm-5">
+						<span class="input-icon block">
+							<input type="number" id="inputError2" class="width-100" name="age" value="<%= data.age %>"/>
+						</span>
+					</div>
+				</div>
+				<div style="height:35px;" class="form-group">
+					<label for="inputError2" class="col-xs-12 col-sm-3 control-label no-padding-right">最后登录</label>
+					<div class="col-xs-12 col-sm-5">
+						<span class="input-icon block">
+							<input type="text" id="inputError2" class="width-100" disabled name="lastLogin"  value="<%= data.lastLogin %>"/>
+						</span>
+					</div>
+				</div>
+				<div style="height:35px;" class="form-group">
+					<label for="inputError2" class="col-xs-12 col-sm-3 control-label no-padding-right">注册Ip</label>
+					<div class="col-xs-12 col-sm-5">
+						<span class="input-icon block">
+							<input type="text" id="inputError2" class="width-100" disabled name="regip"  value="<%= data.regip %>"/>
+						</span>
+					</div>
+				</div>
+				<div style="height:35px;" class="form-group">
+					<label for="inputError2" class="col-xs-12 col-sm-3 control-label no-padding-right">网站权限</label>
+					<label class="radio-inline col-md-offset-1">
+					  <input type="radio" id="inlineRadio1" checked name="level" value="0" <%= data.level==0?'checked':'' %>"> 普通会员
+					</label>
+					<label class="radio-inline col-md-offset-2">
+					  <input type="radio" id="inlineRadio1" name="level" <%= data.level==1?'checked':'' %>> 管理员
+					</label>
+				</div>
+				<div class="form-group">
+                    <div class="col-md-offset-6 col-md-4">
+                        <a href="/admin/userShow" class="btn btn-success">返回</a>
+                        <button class="btn btn-success">更新</button>
+                    </div>
+                </div>
+			</form>
+		</div>
+	</div>
+</div><!-- /.main-content -->
+<% include ../footer %>

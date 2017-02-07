@@ -1,0 +1,124 @@
+<!-- 引入头部 -->
+<% include ../header %>
+	
+<div class="main-content">
+	<div class="breadcrumbs" id="breadcrumbs">
+		<script type="text/javascript">
+			try{ace.settings.check('breadcrumbs' , 'fixed')}catch(e){}
+		</script>
+
+		<ul class="breadcrumb">
+			<li>
+				<i class="icon-home home-icon"></i>
+				<a href="#">首页</a>
+			</li>
+
+			<li>
+				<a href="#">回复模块</a>
+			</li>
+			<li class="active">编辑回复</li>
+		</ul><!-- .breadcrumb -->
+
+		<div class="nav-search" id="nav-search">
+			<form class="form-search">
+				<span class="input-icon">
+					<input type="text" placeholder="Search ..." class="nav-search-input" id="nav-search-input" autocomplete="off" />
+					<i class="icon-search nav-search-icon"></i>
+				</span>
+			</form>
+		</div><!-- #nav-search -->
+	</div>
+
+	<div class="page-content">
+		<div class="page-header">
+			<h1>
+				回复模块
+				<small>
+					<i class="icon-double-angle-right"></i>
+					回复修改
+				</small>
+			</h1>
+		</div><!-- /.page-header -->
+
+		<div class="row">
+			<div class="col-xs-12">
+				<!-- PAGE CONTENT BEGINS -->
+				<div class="row">
+					<div class="col-xs-12 col-sm-6 col-md-12 widget-container-span">
+						<% if(succ.length){ %>
+                    		<p class="alert alert-info"><%= succ %></p>
+               			<%  } %>
+						<form action="/admin/repliedoEdit" method="post">
+						<div class="widget-box">
+							<div class="widget-header header-color-dark">
+								<h5 class="bigger lighter center">
+								主贴:<%= replyData.tid.tName %>
+								<input class="input-xlarge" value="<%= replyData._id %>" name="_id" size="30" type="hidden">
+								</h5>
+
+								<div class="widget-toolbar">
+								</div>
+							</div>
+								<div class="widget-body">
+									<div class="widget-toolbox">
+										<div class="btn-toolbar">
+											<div class="btn-group">
+												<a href="/admin/replieShow" class="btn btn-sm btn-danger">
+													<i class="icon-remove bigger-110"></i>
+													返回
+												</a>
+												<button class="btn btn-sm btn-warning">
+													<i class="icon-ok bigger-110"></i>
+													发布更新
+												</button>
+												<a href="/topic/<%= replyData.tid._id %>" class="btn btn-sm btn-info">
+													<i class="icon-ok bigger-110"></i>
+													查看帖子详情
+												</a>
+												
+											</div>
+
+											<div data-toggle="buttons" class="btn-group">
+												<label class="btn btn-sm">
+													<i class="icon-only icon-bold bigger-110"></i>
+
+													<input type="checkbox" value="1" />
+												</label>
+
+												<label class="btn btn-sm">
+													<i class="icon-only icon-italic bigger-110"></i>
+
+													<input type="checkbox" value="2" />
+												</label>
+											</div>
+
+											<div data-toggle="buttons" class="btn-group">
+												<label class="btn btn-sm btn-primary">
+													<i class="icon-only icon-align-left bigger-110"></i>
+
+													<input type="radio" value="1" />
+												</label>
+
+												<label class="btn btn-sm btn-primary">
+													<i class="icon-only icon-align-center bigger-110"></i>
+
+													<input type="radio" value="2" />
+												</label>
+											</div>
+										</div>
+									</div>
+									<div class="widget-main padding-16">
+										<textarea name="rContent" class="editor" cols="108" rows="20"><%= replyData.rContent %></textarea>	
+									</div>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div><!-- /.col -->
+		</div><!-- /.row -->
+	</div><!-- /.page-content -->
+</div><!-- /.main-content -->
+
+<!-- 引入底部 -->
+<% include ../footer %>

@@ -1,0 +1,110 @@
+<!-- 加载头部 -->
+<% include header %>
+
+<div id="main">
+    <!-- 加载右侧的slidebar -->
+    <!-- 加载右侧部分 -->
+    <% include slidebar %>
+    
+    <div id="content">
+        <div class="panel">
+            <div class="header">
+                <ul class="breadcrumb">
+                    <li><a href="/">主页</a><span class="divider">/</span></li>
+                    <li class="active">设置</li>
+                </ul>
+            </div>
+            <div class="inner">
+                <% if(errMsg.length){ %>
+                    <p class="alert alert-danger"><%= errMsg %></p>
+                <%  } %>
+                <% if(succ.length){ %>
+                    <p class="alert alert-info"><%= succ %></p>
+                <%  } %>
+                <form id="setting_form" class="form-horizontal" action="/user/setting" method="post" enctype="multipart/form-data">
+                    <div class="control-group">
+                        <label class="control-label" for="name">用户名</label>
+                        <div class="controls">
+                            <input class="input-xlarge readonly" id="name" name="uname" size="30" disabled value="<%= user.uname %>" type="text">
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label" for="email">电子邮件</label>
+                        <div class="controls">
+                            <input class="input-xlarge" id="email" disabled name="email" size="30" value="<%= user.email %>" type="text">
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label" for="userpic">用户头像</label>
+                        <div class="controls">
+                            <input class="input-xlarge" id="userpic" name="upic" size="30" type="file">
+                        </div>
+                    </div>
+                   
+                    <div class="control-group">
+                        <label class="control-label" for="weibo">金币</label>
+                        <div class="controls">
+                            <input class="input-xlarge" disabled id="weibo" name="gold" size="30" value="<%= user.gold %>" type="text">
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label" for="signature">个性签名</label>
+                        <div class="controls">
+                            <textarea class="input-xlarge" id="signature" name="des" size="30"><%= user.des %></textarea>
+                        </div>
+                    </div>
+
+                    <div class="form-actions">
+                        <input class="span-primary submit_btn" data-loading-text="保存中.." value="保存设置" type="submit">
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="panel">
+            <div class="header">
+              <span class="col_fade">更改密码</span>
+            </div>
+            <div class="inner">
+                <% if(errMi.length){ %>
+                    <p class="alert alert-danger"><%= errMi %></p>
+                <%  } %>
+              <form id="change_pass_form" class="form-horizontal" action="/user/miupwd" method="post">
+                <div class="control-group">
+                  <label class="control-label" for="old_pass">当前密码</label>
+
+                  <div class="controls">
+                    <input class="input-xlarge" id="old_pass" name="upwd" size="30" type="password">
+                  </div>
+                </div>
+                <div class="control-group">
+                  <label class="control-label" for="new_pass">新密码</label>
+
+                  <div class="controls">
+                    <input class="input-xlarge" id="new_pass" name="newupwd" size="30" type="password">
+                  </div>
+                </div>
+                <div class="control-group">
+                  <label class="control-label" for="new_pass">确认密码</label>
+
+                  <div class="controls">
+                    <input class="input-xlarge" id="new_pass" name="reupwd" size="30" type="password">
+                  </div>
+                </div>
+                <input id="action" name="action" value="change_password" type="hidden">
+                <input name="_csrf" value="7zRmRFar-Oj4cVPDmqBCxCgIEp0hL4o2L5eU" type="hidden">
+
+                <div class="form-actions">
+                  <input class="span-primary submit_btn" data-loading-text="更改中.." value="更改密码" type="submit">
+                </div>
+              </form>
+            </div>
+          </div>
+
+    </div>
+</div>
+    
+    
+
+
+<!-- 公共底部部分 -->
+<% include footer %>

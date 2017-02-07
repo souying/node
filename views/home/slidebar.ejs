@@ -1,0 +1,145 @@
+<div id="sidebar">
+		<!-- 设置登录或个人信息  -->
+		<% if(user){ %>
+			<div class="panel">    
+			    <div class="header">
+			      	<span class="col_fade">个人信息</span>
+			    </div>
+			    <div class="inner">
+			      	<div class="user_card">
+			  			<div>
+			  				<!-- 这是头像 -->
+			    			<a class="user_avatar" href="/user/ucenter">
+			    				<!--输出图片-->
+			    				<% if(user.upic){ %>
+			    					<img src="/uploads/<%= user.upic %>" title="<%= user.uname %>">
+			    				<% }else{ %>
+			    					<img src="/uploads/default.png" title="<%= user.uname %>">
+			    				<% } %>
+			  				</a>
+						    <span class="user_name">
+						    	<!-- 用户 账户或者是昵称 -->
+						    	<a class="dark" href="/user/ucenter"><%= user.uname %></a>
+						    </span>
+						    <% if(user && user.level==1){ %>
+							<div class="board clearfix">
+						      <div class="floor">
+						        <a href="/admin">进入管理后台</a>
+						      </div>
+						    </div>
+						   <% } %>
+						    <div class="board clearfix">
+						      <div class="floor">
+						        <span class="big">积分: <%= user.gold %> </span>
+						      </div>
+						    </div>
+			    			<div class="space clearfix"></div>
+						    <span class="signature">
+						        “
+						        	
+						            <%= user.des ||'这个家伙很懒，什么都没有留下....' %>
+						        
+						        ”
+						    </span>
+			 			</div>
+					</div>
+				</div>    
+ 		 	</div>
+		  	<div class="panel">
+		    	<div class="inner">
+		     		<a href="/topic/create" id="create_topic_btn">
+		        		<span class="span-success">发布话题</span>
+		      		</a>
+		    	</div>
+		 	</div>
+		<% }else{ %>
+			<div class="panel">
+				<div class="inner">
+					<p>CNode：Node.js专业中文社区</p>
+					<div>
+						您可以
+						<a href="/user/login">登录</a>
+						或
+						<a href="/user/reg">注册</a>
+						, 也可以
+						<a href="/user/login">
+						<span class="span-info"> 通过 GitHub 登录 </span>
+						</a>
+					</div>
+				</div>
+			</div>
+		<% } %>
+			
+		<!-- 以下是广告 -->
+		<div class="panel">
+			<div class="inner ads">
+				<a class="banner sponsor_outlink" data-label="ucloud-banner" target="_blank" href="#">
+					<img src="/img/ucloudyun.png">
+				</a>
+				<div class="sep10"></div>
+				<a class="banner sponsor_outlink" data-label="submail" target="_blank" href="#">
+					<img src="/img/a2p.gif">
+				</a>
+				<div class="sep10"></div>
+				<a class="banner sponsor_outlink" data-label="alinode" target="_blank" href="#">
+					<img src="/img/alinode_.png">
+				</a>
+			</div>
+		</div>
+		<div class="panel">
+			<div class="header">
+				<span class="col_fade">无人回复的话题</span>
+			</div>
+			<div class="inner">
+				<ul class="unstyled">
+				<% wuData.forEach(function(wudata){ %>
+					<li>
+						<div>
+							<a class="dark topic_title" title="<%= wudata.tName %>" href="/topic/<%= wudata._id %>"><%= wudata.tName %></a>
+						</div>
+					</li>
+				<% }) %>
+					
+					
+				</ul>
+			</div>
+		</div>
+		<div class="panel">
+			<div class="header">
+				<span class="col_fade">积分榜</span>
+				<a class="dark" href="/users/top100">TOP 100 >></a>
+			</div>
+			<div class="inner">
+				<ol>
+					<% goldData.forEach(function(golddata){ %>
+					<li>
+						<span class="top_score"><%= golddata.gold %></span>
+						<span class="user_name">
+						<a href="/user/<%= golddata.uname %>"><%= golddata.uname %></a>
+						</span>
+					</li>
+					<% }) %>
+				</ol>
+			</div>
+		</div>
+		<div class="panel">
+			<div class="header">
+				<span class="col_fade">友情社区</span>
+				<a class="dark" href="/user/kind"> 申请友情链接 >></a>
+			</div>
+			<div class="inner">
+				<ol class="friendship-community">
+					<% kindData.forEach(function(kind){ %>
+						<% if(kind.isShow==1){ %>
+						<li>
+							<a target="_blank" href="<%= kind.webUrl %>">
+								<img src="<%= kind.webpic %>">
+							</a>
+						</li>
+						<div class="sep10"></div>
+						<% } %>
+					<% }) %>
+				</ol>
+			</div>
+		</div>
+	</div>

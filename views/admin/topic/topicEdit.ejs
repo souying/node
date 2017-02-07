@@ -1,0 +1,169 @@
+<!-- 引入头部 -->
+<% include ../header %>
+	
+<div class="main-content">
+	<div class="breadcrumbs" id="breadcrumbs">
+		<script type="text/javascript">
+			try{ace.settings.check('breadcrumbs' , 'fixed')}catch(e){}
+		</script>
+
+		<ul class="breadcrumb">
+			<li>
+				<i class="icon-home home-icon"></i>
+				<a href="#">首页</a>
+			</li>
+
+			<li>
+				<a href="#">话题模块</a>
+			</li>
+			<li class="active">查看话题</li>
+		</ul><!-- .breadcrumb -->
+
+		<div class="nav-search" id="nav-search">
+			<form class="form-search">
+				<span class="input-icon">
+					<input type="text" placeholder="Search ..." class="nav-search-input" id="nav-search-input" autocomplete="off" />
+					<i class="icon-search nav-search-icon"></i>
+				</span>
+			</form>
+		</div><!-- #nav-search -->
+	</div>
+
+	<div class="page-content">
+		<div class="page-header">
+			<h1>
+				话题模块
+				<small>
+					<i class="icon-double-angle-right"></i>
+					话题预览
+				</small>
+			</h1>
+		</div><!-- /.page-header -->
+
+		<div class="row">
+			<div class="col-xs-12">
+				<!-- PAGE CONTENT BEGINS -->
+				<div class="row">
+					<div class="col-xs-12 col-sm-6 col-md-12 widget-container-span">
+						<% if(succ.length){ %>
+                    		<p class="alert alert-info"><%= succ %></p>
+               			<%  } %>
+						<form action="/admin/topicdoEdit" method="post">
+						<div class="widget-box">
+							<div class="widget-header header-color-dark">
+								<h5 class="bigger lighter center">
+								标题
+								<input class="input-xlarge" value="<%= topicData.tName %>" name="tName" size="30" type="text">
+								<input class="input-xlarge" value="<%= topicData._id %>" name="_id" size="30" type="hidden">
+								</h5>
+
+								<div class="widget-toolbar">
+								</div>
+							</div>
+								<div class="widget-body">
+									<div class="widget-toolbox">
+										<div class="btn-toolbar">
+											<div class="btn-group">
+												<a href="/admin/topicShow" class="btn btn-sm btn-danger">
+													<i class="icon-remove bigger-110"></i>
+													返回
+												</a>
+												<button class="btn btn-sm btn-warning">
+													<i class="icon-ok bigger-110"></i>
+													发布更新
+												</button>
+												<button type="button" class="disabled btn btn-sm btn-success">
+													<b class="bigger-110">分类：</b>
+													<%= topicData.cid.cateName %>
+												</button>
+												<button type="button" class="disabled btn btn-sm btn-success">
+													<b class="bigger-110">作者：</b>
+													<%= topicData.user.uname %>
+												</button>
+												<button type="button" class="disabled btn btn-sm btn-success">
+													<b class="bigger-110">发布时间：</b>
+														<% var times = new Date() - topicData.createTime;
+								                        //console.log(times);
+								                        var timet;
+								                        if(Math.floor(times/1000)){
+								                          timet = '刚刚';
+								                        }
+								                        if(Math.floor(times/1000%60)){
+								                           timet = Math.floor(times/1000%60)+'秒之前';
+								                        }
+								                        if(Math.floor(times/1000/60%60)){
+								                          timet = Math.floor(times/1000/60%60)+'分之前';
+								                        }
+								                        if(Math.floor(times/1000/60/60%24)){
+								                           timet = Math.floor(times/1000/60/60%24)+'时之前';
+								                        }
+								                        if(Math.floor(times/1000/60/60/24)){
+								                          timet = Math.floor(times/1000/60/60/24)+'天之前';
+								                        }
+
+										                %>
+										               <%= timet %>
+												</button>
+												<button type="button" class="disabled btn btn-sm btn-success">
+													<b class="bigger-110">访问：</b>
+													<%= topicData.visitNum %>
+												</button>
+												<button type="button" class="disabled btn btn-sm btn-success">
+													<b class="bigger-110">回复：</b>
+													<%= topicData.rid.length %>
+												</button>
+												<% if(topicData.isActive==1){ %>
+												<button type="button" class="disabled btn btn-sm btn-success">
+													<b class="bigger-110">未屏蔽</b>
+												</button>
+												<% }else{ %>
+												<button type="button" class="disabled btn btn-sm btn-danger">
+													<b class="bigger-110">已屏蔽</b>
+												</button>
+												<% } %>
+											</div>
+
+											<div data-toggle="buttons" class="btn-group">
+												<label class="btn btn-sm">
+													<i class="icon-only icon-bold bigger-110"></i>
+
+													<input type="checkbox" value="1" />
+												</label>
+
+												<label class="btn btn-sm">
+													<i class="icon-only icon-italic bigger-110"></i>
+
+													<input type="checkbox" value="2" />
+												</label>
+											</div>
+
+											<div data-toggle="buttons" class="btn-group">
+												<label class="btn btn-sm btn-primary">
+													<i class="icon-only icon-align-left bigger-110"></i>
+
+													<input type="radio" value="1" />
+												</label>
+
+												<label class="btn btn-sm btn-primary">
+													<i class="icon-only icon-align-center bigger-110"></i>
+
+													<input type="radio" value="2" />
+												</label>
+											</div>
+										</div>
+									</div>
+									<div class="widget-main padding-16">
+										<textarea name="tContent" class="editor" cols="108" rows="20"><%= topicData.tContent %></textarea>	
+									</div>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div><!-- /.col -->
+		</div><!-- /.row -->
+	</div><!-- /.page-content -->
+</div><!-- /.main-content -->
+
+<!-- 引入底部 -->
+<% include ../footer %>

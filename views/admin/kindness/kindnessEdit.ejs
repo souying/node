@@ -1,0 +1,105 @@
+<% include ../header %>
+<div class="main-content">
+	<div class="breadcrumbs" id="breadcrumbs">
+		<script type="text/javascript">
+			try{ace.settings.check('breadcrumbs' , 'fixed')}catch(e){}
+		</script>
+
+		<ul class="breadcrumb">
+			<li>
+				<i class="icon-home home-icon"></i>
+				<a href="/admin">首页</a>
+			</li>
+			<li class="active">友情链接修改</li>
+		</ul><!-- .breadcrumb -->
+
+		<div class="nav-search" id="nav-search">
+			<form class="form-search">
+				<span class="input-icon">
+					<input type="text" placeholder="Search ..." class="nav-search-input" id="nav-search-input" autocomplete="off" />
+					<i class="icon-search nav-search-icon"></i>
+				</span>
+			</form>
+		</div><!-- #nav-search -->
+	</div>
+
+	<div class="step-content row-fluid position-relative" id="step-container">
+		<div class="step-pane active" id="step1">
+			<h3 class="lighter block green">友情链接修改</h3>
+			<% if(errMsg.length){ %> 
+				<p class="alert alert-danger"><%= errMsg %></p>
+			<% } %>
+			<% if(succ.length){ %>
+                    <p class="alert alert-info"><%= succ %></p>
+            <%  } %>
+			<form class="form-horizontal" action="/admin/kinddoEdit" method="post">
+				
+				<div style="height:35px;" class="form-group">
+					<label for="inputError2" class="col-xs-12 col-sm-3 control-label no-padding-right">网站名</label>
+					<div class="col-xs-12 col-sm-5">
+						<span class="input-icon block">
+							<input type="text" id="inputError2" class="width-100" name="webName" value="<%= kindData.webName %>"/>
+							<input type="hidden" id="inputError2" class="width-100" name="_id" value="<%= kindData._id %>"/>
+						</span>
+					</div>
+				</div>
+				<div style="height:35px;" class="form-group">
+					<label for="inputError2" class="col-xs-12 col-sm-3 control-label no-padding-right">联系邮箱</label>
+					<div class="col-xs-12 col-sm-5">
+						<span class="input-icon block">
+							<input type="email" id="inputError2" class="width-100" name="email" value="<%= kindData.email %>"/>
+						</span>
+					</div>
+				</div>
+				<div style="height:35px;" class="form-group">
+					<label for="inputError2" class="col-xs-12 col-sm-3 control-label no-padding-right">网址</label>
+					<div class="col-xs-12 col-sm-5">
+						<span class="input-icon block">
+							<input type="text" id="inputError2" class="width-100" name="webUrl" value="<%= kindData.webUrl %>"/>
+						</span>
+					</div>
+				</div>
+				<div style="height:35px;" class="form-group">
+					<label for="inputError2" class="col-xs-12 col-sm-3 control-label no-padding-right">LOGO地址</label>
+					<div class="col-xs-12 col-sm-5">
+						<span class="input-icon block">
+							<input type="text" id="inputError2" class="width-100" name="webpic" value="<%= kindData.webpic %>"/>
+						</span>
+					</div>
+				</div>
+				<div style="height:35px;" class="form-group">
+					<label for="inputError2" class="col-xs-12 col-sm-3 control-label no-padding-right">网站介绍</label>
+					<div class="col-xs-12 col-sm-5">
+						<span class="input-icon block">
+							<input type="text" id="inputError2" class="width-100" name="webContent" value="<%= kindData.webContent %>"/>
+						</span>
+					</div>
+				</div>
+				<div style="height:35px;" class="form-group">
+					<label for="inputError2" class="col-xs-12 col-sm-3 control-label no-padding-right">排列序号</label>
+					<div class="col-xs-12 col-sm-5">
+						<span class="input-icon block">
+							<input type="number" id="inputError2" class="width-100" name="web_top" value="<%= kindData.web_top %>"/>
+						</span>
+					</div>
+				</div>
+				<div style="height:35px;" class="form-group">
+					<label for="inputError2" class="col-xs-12 col-sm-3 control-label no-padding-right">审核状态</label>
+					<div class="col-xs-12 col-sm-5">
+						<span class="input-icon block">
+							<input type="number" id="inputError2" class="width-100" name="isShow" value="<%= kindData.isShow %>"/>
+							<i style="color:red;">1代表审核通过；0表示审核不通过</i>
+						</span>
+					</div>
+				</div>
+				<div class="form-group">
+                    <div class="col-md-offset-6 col-md-4">
+                        <a href="/admin/kindness" class="btn btn-success">返回</a>
+                        <button class="btn btn-success">保存</button>
+                    </div>
+                </div>
+			</form>
+		</div>
+	</div>
+</div><!-- /.main-content -->
+<% include ../footer %>

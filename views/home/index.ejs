@@ -1,0 +1,164 @@
+<!-- 加载头部 -->
+<% include header %>
+
+<!-- 主体部分 -->
+<div id="main">
+	<!-- 加载右侧的slidebar -->
+	<% include slidebar %>
+
+	<div id="content">
+		<div class="panel">
+			<div class="header">
+				<% if(tab=='all'){ %> 
+					<a class="topic-tab current-tab" href="/?tab=all">全部</a>
+				<%}else{ %>
+					<a class="topic-tab" href="/?tab=all">全部</a>
+				<%} %>
+				
+				<a class="topic-tab " href="/?tab=good">精华</a>
+
+				<!-- 板块信息 -->
+				<% catetopData.forEach(function(cate){ 
+						if(tab==cate._id){ 
+				%>
+						<a class="topic-tab current-tab" href="/?tab=<%= cate._id %>"><%= cate.cateName %></a>	
+				<%
+						}else{
+				%>
+							<a class="topic-tab" href="/?tab=<%= cate._id %>"><%= cate.cateName %></a>
+				<%
+						}
+					}) 
+				%>
+				
+			</div>
+			<div class="inner no-padding">
+				<div id="topic_list">
+					<% topicData.forEach(function(topic){ %>
+						<% if(topic.isActive==1){ %>
+							<div class="cell">
+							<a class="user_avatar pull-left" href="/user/nswbmw">
+								<% if(topic.user.upic){ %>
+				    					<img src="/uploads/<%= topic.user.upic %>" title="<%= topic.user.uname %>">
+				    				<% }else{ %>
+				    					<img src="/uploads/default.png" title="<%= topic.user.uname %>">
+				    				<% } %>
+
+							</a>
+							<span class="reply_count pull-left">
+								<span class="count_of_replies" title="回复数"> <%= topic.rid.length %> </span>
+								<span class="count_seperator">/</span>
+								<span class="count_of_visits" title="点击数"> <%= topic.visitNum %> </span>
+							</span>
+							<a class="last_time pull-right" href="/topic/<%= topic._id %>">
+				    					<img class="user_small_avatar" src="/uploads/default.png" title="<%= topic.user.uname %>">
+								<span class="last_active_time">
+									<% var times = new Date() - topic.createTime;
+			                        console.log(times);
+			                        var timet;
+			                        if(Math.floor(times/1000)){
+			                          timet = '刚刚';
+			                        }
+			                        if(Math.floor(times/1000%60)){
+			                           timet = Math.floor(times/1000%60)+'秒之前';
+			                        }
+			                        if(Math.floor(times/1000/60%60)){
+			                          timet = Math.floor(times/1000/60%60)+'分之前';
+			                        }
+			                        if(Math.floor(times/1000/60/60%24)){
+			                           timet = Math.floor(times/1000/60/60%24)+'时之前';
+			                        }
+			                        if(Math.floor(times/1000/60/60/24)){
+			                          timet = Math.floor(times/1000/60/60/24)+'天之前';
+			                        }
+
+					                %>
+					               <%= timet %> 
+								</span>
+							</a>
+							<div class="topic_title_wrapper">
+								<% if(topic.top==1){ %>
+									<span class="put_top">置顶</span>
+								<% }else if(topic.love==1){ %>
+									<span class="put_top">加精</span>
+								<% }else{ %>
+									<span class="topiclist-tab"><%= topic.cid.cateName %></span>
+								<% } %>
+								
+								<a class="topic_title" title="<%= topic.tName %>" href="/topic/<%= topic._id %>"> <%= topic.tName %> </a>
+							</div>
+							</div>
+						<% } %>
+					<% }) %>
+
+				</div>
+				<div class="pagination" current_page="1">
+					<ul>
+						<li>
+							<a href="/?tab=<%= tab%>&page=1">首页</a>
+						</li>
+
+						<li>
+							<!-- 当前的page为1，该位置是不允许进行单击的 -->
+							<% if(page==1){ %>
+								<a class="disabled">«</a>
+							<%}else{ %> 
+								<a href="/?tab=<%= tab%>&page=<%= page-1%>">«</a>
+							<%} %>
+						</li>
+
+						<% if(page-3>0){ %> 
+							<li>
+								<a>...</a>
+							</li>
+						<%} %>
+						
+						<% for(var i=page-2;i<=parseInt(page)+2;i++){ 
+								// 小于1的隐藏
+								if(i<1){
+									continue;
+								};
+
+								// 判断是否是当前页面
+								if(parseInt(page)==i){
+						%>
+									<li class="active">
+										<a href="/?tab=<%= tab%>&page=<%= i %>"><%= i %></a>
+									</li>
+						<%
+								}else{ 
+
+						%>
+									<li>
+										<a href="/?tab=<%= tab%>&page=<%= i %>"><%= i %></a>
+									</li>
+						<%		}
+							} 
+						%>
+
+						<!-- +3超过了最大值 -->
+						<% if(parseInt(page)+3<=pageMax){ %> 
+							<li>
+								<a>...</a>
+							</li>
+						<%} %>
+							
+						<li>
+							<% if(page==pageMax){ %>
+								<a class="disabled">»</a>
+							<%}else{ %> 
+								<a href="/?tab=<%= tab%>&page=<%= parseInt(page)+1%>">»</a>
+							<%} %>
+						</li>
+						<li>
+							<a href="/?tab=<%= tab%>&page=<%= pageMax %>">尾页</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div id="backtotop" style="display: block; top: 383px; right: 0px;">回到顶部</div>
+<!-- 公共底部部分 -->
+<% include footer %>

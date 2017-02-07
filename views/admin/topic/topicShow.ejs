@@ -1,0 +1,244 @@
+<!-- 引入头部 -->
+<% include ../header %>
+	
+<div class="main-content">
+	<div class="breadcrumbs" id="breadcrumbs">
+		<script type="text/javascript">
+			try{ace.settings.check('breadcrumbs' , 'fixed')}catch(e){}
+		</script>
+
+		<ul class="breadcrumb">
+			<li>
+				<i class="icon-home home-icon"></i>
+				<a href="#">首页</a>
+			</li>
+
+			<li>
+				<a href="#">话题模块</a>
+			</li>
+			<li class="active">查看话题</li>
+		</ul><!-- .breadcrumb -->
+
+		<div class="nav-search" id="nav-search">
+			<form class="form-search">
+				<span class="input-icon">
+					<input type="text" placeholder="Search ..." class="nav-search-input" id="nav-search-input" autocomplete="off" />
+					<i class="icon-search nav-search-icon"></i>
+				</span>
+			</form>
+		</div><!-- #nav-search -->
+	</div>
+
+	<div class="page-content">
+		<div class="page-header">
+			<h1>
+				话题模块
+				<small>
+					<i class="icon-double-angle-right"></i>
+					话题列表
+				</small>
+			</h1>
+		</div><!-- /.page-header -->
+
+		<div class="row">
+			<div class="col-xs-12">
+				<!-- PAGE CONTENT BEGINS -->
+
+				<div class="row">
+					<div class="col-xs-12">
+						<div class="table-responsive">
+							<% if(succ.length){ %>
+                    			<p class="alert alert-info"><%= succ %></p>
+               				 <%  } %>
+							<table id="sample-table-1" class="table table-striped table-bordered table-hover">
+								<thead>
+									<tr>
+										<th class="center">
+											<label>
+												<input type="checkbox" class="ace" />
+												<span class="lbl"></span>
+											</label>
+										</th>
+										<th>标题</th>
+										<th>作者</th>
+										<th>分类</th>
+										<th>发布时间</th>
+										<th>热度</th>
+										<th>回复量</th>
+										<th>操作</th>
+										<th class="hidden-480">编辑</th>
+									</tr>
+								</thead>
+								<% topicData.forEach(function(topic){ %>
+								<tbody>
+									<td class="center">
+										<label>
+											<input type="checkbox" class="ace" />
+											<span class="lbl"></span>
+										</label>
+									</td>
+									<td>
+										<%= topic.tName %>
+									</td>
+									<td>
+										<%= topic.user.uname %>
+									</td>
+									<td>
+										<%= topic.cid.cateName %>
+									</td>
+									<td>
+										<% var times = new Date() - topic.createTime;
+				                        //console.log(times);
+				                        var timet;
+				                        if(Math.floor(times/1000)){
+				                          timet = '刚刚';
+				                        }
+				                        if(Math.floor(times/1000%60)){
+				                           timet = Math.floor(times/1000%60)+'秒之前';
+				                        }
+				                        if(Math.floor(times/1000/60%60)){
+				                          timet = Math.floor(times/1000/60%60)+'分之前';
+				                        }
+				                        if(Math.floor(times/1000/60/60%24)){
+				                           timet = Math.floor(times/1000/60/60%24)+'时之前';
+				                        }
+				                        if(Math.floor(times/1000/60/60/24)){
+				                          timet = Math.floor(times/1000/60/60/24)+'天之前';
+				                        }
+
+						                %>
+						               <%= timet %> 
+									</td>
+									<td>
+										<%= topic.visitNum %>
+									</td>
+									<td>
+										<%= topic.rid.length %>
+									</td>
+									<td class="hidden-480">
+										<div class="visible-md visible-lg hidden-sm hidden-xs btn-group">
+											<a href="/admin/topicRemove?_id=<%= topic._id %>" class="btn btn-xs btn-danger">删除</a>
+										</div>
+										<% if(topic.isActive==1){%>
+										<div class="visible-md visible-lg hidden-sm hidden-xs btn-group">
+											<a href="/admin/topicStop?_id=<%= topic._id %>" class="btn btn-xs btn-warning">屏蔽</a>
+										</div>
+										<% }else{ %>
+										<div class="visible-md visible-lg hidden-sm hidden-xs btn-group">
+											<a href="/admin/topicStart?_id=<%= topic._id %>" class="btn btn-xs btn-success">恢复</a>
+										</div>
+										<% } %>
+										<% if(topic.top==1){%>
+										<div class="visible-md visible-lg hidden-sm hidden-xs btn-group">
+											<a href="/admin/topictopNo?_id=<%= topic._id %>" class="btn btn-xs btn-warning">取消</a>
+										</div>
+										<% }else{ %>
+										<div class="visible-md visible-lg hidden-sm hidden-xs btn-group">
+											<a href="/admin/topicTop?_id=<%= topic._id %>" class="btn btn-xs btn-success">置顶</a>
+										</div>
+										<% } %>
+										<% if(topic.love==1){%>
+										<div class="visible-md visible-lg hidden-sm hidden-xs btn-group">
+											<a href="/admin/topicloveNo?_id=<%= topic._id %>" class="btn btn-xs btn-warning">取消</a>
+										</div>
+										<% }else{ %>
+										<div class="visible-md visible-lg hidden-sm hidden-xs btn-group">
+											<a href="/admin/topicLove?_id=<%= topic._id %>" class="btn btn-xs btn-success">加精</a>
+										</div>
+										<% } %>
+									</td>					
+									<td class="hidden-480">
+										<a href="/admin/topicEdit?_id=<%= topic._id %>" class="btn btn-xs btn-primary">
+											<i class="icon-edit bigger-120"></i>
+										</a>
+										<a href="/admin/topiconeShow?_id=<%= topic._id %>" class="btn btn-xs btn-success">
+											<span class="">预览</span>
+										</a>
+									</td>
+								</tbody>
+								<%}) %>
+							</table>
+
+
+						</div><!-- /.table-responsive -->
+					</div><!-- /span -->
+				</div><!-- /row -->
+
+				<!-- 分页 -->
+				<div class="row">
+					<div class="col-md-6 pull-right">
+						<div class="dataTables_paginate paging_bootstrap">
+							<div  current_page="1">
+								<ul class="pagination">
+									<li>
+										<a href="/admin/topicShow?page=1">首页</a>
+									</li>
+
+									<li>
+										<!-- 当前的page为1，该位置是不允许进行单击的 -->
+										<% if(page==1){ %>
+											<a class="disabled">«</a>
+										<%}else{ %> 
+											<a href="/admin/topicShow?page=<%= page-1%>">«</a>
+										<%} %>
+									</li>
+
+									<% if(page-3>0){ %> 
+										<li>
+											<a>...</a>
+										</li>
+									<%} %>
+									
+									<% for(var i=page-2;i<=parseInt(page)+2;i++){ 
+											// 小于1的隐藏
+											if(i<1){
+												continue;
+											};
+
+											// 判断是否是当前页面
+											if(parseInt(page)==i){
+									%>
+												<li class="active">
+													<a href="/admin/topicShow?page=<%= i %>"><%= i %></a>
+												</li>
+									<%
+											}else{ 
+
+									%>
+												<li>
+													<a href="/admin/topicShow?page=<%= i %>"><%= i %></a>
+												</li>
+									<%		}
+										} 
+									%>
+
+									<!-- +3超过了最大值 -->
+									<% if(parseInt(page)+3<=pageMax){ %> 
+										<li>
+											<a>...</a>
+										</li>
+									<%} %>
+										
+									<li>
+										<% if(page==pageMax){ %>
+											<a class="disabled">»</a>
+										<%}else{ %> 
+											<a href="/admin/topicShow?page=<%= parseInt(page)+1%>">»</a>
+										<%} %>
+									</li>
+									<li>
+										<a href="/admin/topicShow?page=<%= pageMax %>">尾页</a>
+									</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+
+			</div><!-- /.col -->
+		</div><!-- /.row -->
+	</div><!-- /.page-content -->
+</div><!-- /.main-content -->
+
+<!-- 引入底部 -->
+<% include ../footer %>

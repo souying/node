@@ -1,0 +1,299 @@
+<% include header %>
+
+<!-- 左侧和右侧部分 -->
+<div id="main">
+	<!-- 右侧发表的用户 -->
+	<div id="sidebar">
+		<div class="panel">
+		    <div class="header">
+		      <span class="col_fade">作者</span>
+		    </div>
+		    <div class="inner">
+		      	<div class="user_card">
+		  			<div>
+					    <a class="user_avatar" href="/user/<%= topicData.user._id %>">
+					      	<% if(topicData.user.upic){ %>
+			    				<img src="/uploads/<%= topicData.user.upic %>" title="<%= topicData.user.uname %>">
+			    			<% }else{ %>
+			    				<img src="/uploads/default.png" title="<%= topicData.user.uname %>">
+			    			<% } %>
+					    </a>
+	   				 	<span class="user_name"><a class="dark" href="/user/<%= topicData.user._id %>"><%= topicData.user.uname %></a></span>
+
+					    <div class="board clearfix">
+					      <div class="floor">
+					        <span class="big">积分: <%= topicData.user.gold %> </span>
+					      </div>
+					    </div>
+	    				<div class="space clearfix"></div>
+		    			<span class="signature">
+					        “
+					        
+					           <%= topicData.user.des||'这个家伙很懒，什么都没有留下....' %>
+					        
+					        ”
+					    </span>
+	  				</div>
+				</div>
+	    	</div>
+		</div>
+
+	  
+		<!-- 下面的广告 -->
+		<div class="panel">
+		  	<div class="inner ads">
+				<a href="http://www.ucloud.cn/site/seo.html?utm_source=zanzhu&amp;utm_campaign=cnodejs&amp;utm_medium=display&amp;utm_content=shengji&amp;ytag=cnodejs_display" target="_blank" class="banner sponsor_outlink" data-label="ucloud-banner">
+		        	<img src="//dn-cnode.qbox.me/Fk7rRGVgB0XWgKjlpJs72VJty9Eu">
+		      	</a>
+		    	<div class="sep10"></div>
+		    	<a href="https://alinode.aliyun.com/?ref=cnode" target="_blank" class="banner sponsor_outlink" data-label="alinode">
+		        	<img src="//dn-cnode.qbox.me/Fn4D6BhOTz1IswvmzeZ1q7QW1ls_">
+		      	</a>
+		    
+		  	</div>
+		</div>
+
+	 
+		<!-- 作者的其他话题 -->
+		<div class="panel">
+		    <div class="header">
+		      <span class="col_fade">作者其它话题</span>
+		    </div>
+		    <div class="inner">
+		    	<ul class="unstyled">
+		    	<% uData.forEach(function(data){ %>
+		    		<%= console.log(data.tName) %>
+		        	<li>
+		  				<div>
+		  					<a class="dark topic_title" href="/topic/<%= data._id %>" title="<%= data.tName %>"><%= data.tName %></a>
+		  				</div>
+					</li>
+				<% }) %>
+		      	</ul>
+		      
+		    </div>
+		</div>
+
+	
+		<!-- 无人回复的话题 -->
+	  	<div class="panel">
+		    <div class="header">
+		      <span class="col_fade">无人回复的话题</span>
+		    </div>
+	   		<div class="inner">
+	    		<ul class="unstyled">
+	        		<% wuData.forEach(function(wudata){ %>
+					<li>
+						<div>
+							<a class="dark topic_title" title="<%= wudata.tName %>" href="/topic/<%= wudata._id %>"><%= wudata.tName %></a>
+						</div>
+					</li>
+					<% }) %>
+	      		</ul>
+	      
+	    	</div>
+	  	</div>
+	</div>
+
+	<!-- 以下是话题部分 -->
+	<% if(topicData.isActive==1){ %>
+		<div id="content">
+			<% if(topicData.isShow==0){ %>
+		  		<div class="panel">
+			    	<div class="header topic_header">
+			      		<span class="topic_full_title"><%= topicData.tName %></span>
+			      		<div class="changes">
+					        <span>
+					          	<% var times = new Date() - topicData.createTime;
+		                        console.log(times);
+		                        var timet;
+		                        if(Math.floor(times/1000)){
+		                          timet = '刚刚';
+		                        }
+		                        if(Math.floor(times/1000%60)){
+		                           timet = Math.floor(times/1000%60)+'秒之前';
+		                        }
+		                        if(Math.floor(times/1000/60%60)){
+		                          timet = Math.floor(times/1000/60%60)+'分之前';
+		                        }
+		                        if(Math.floor(times/1000/60/60%24)){
+		                           timet = Math.floor(times/1000/60/60%24)+'时之前';
+		                        }
+		                        if(Math.floor(times/1000/60/60/24)){
+		                          timet = Math.floor(times/1000/60/60/24)+'天之前';
+		                        }
+
+				                %>
+				               <%= timet %> 
+					        </span>
+					        <span>
+					          作者 <a href="/user/zbinlin"><%= topicData.user.uname %></a>
+					        </span>
+					        <span>
+					          <%= topicData.visitNum %> 次浏览
+					        </span>
+			        		<span> 来自 <%= topicData.cid.cateName %></span>
+			        		<input class="span-common span-success pull-right collect_btn" type="submit" value="收藏" action="collect">
+			        	</div>
+			        	<div id="manage_topic"></div>
+			    	</div>
+				    <div class="inner topic">
+				    	<%= topicData.tContent %>
+					</div>
+				</div>
+			<% }else{ %>
+				<div class="panel">
+				    <div class="inner topic">
+				    	该帖子需要登录回复可见,请回复
+					</div>
+				</div>
+			<% } %>
+
+			<!-- 评论 -->
+			<% if(replyData.length){ %>
+			<div class="panel">
+			    <div class="header">
+			    	<span class="col_fade"><%= replyData.length %> 回复</span>
+			    </div>
+
+				
+			    <!-- 第一条评论 -->
+			    <% replyData.forEach(function(reply){ %> 
+					<div class="cell reply_area reply_item
+				  " id="reply1" reply_id="585dfcda51aa32885d4f0fee" reply_to_id="">
+						<div class="author_content">
+							<%= console.log(reply.user._id) %>
+					    	<a href="/user/<%= reply.user._id %>" class="user_avatar">
+					      		<% if(reply.user.upic){ %>
+				    					<img src="/uploads/<%= reply.user.upic %>" title="<%= reply.user.uname %>">
+				    				<% }else{ %>
+				    					<img src="/uploads/default.png" title="<%= reply.user.uname %>">
+				    				<% } %>
+					      	</a>
+				    		<div class="user_info">
+				      			<a class="dark reply_author" href="/user/<%= reply.user._id %>"><%= reply.user.uname %></a>
+				     			<a class="reply_time" href="#585dfcda51aa32885d4f0fee">
+				     				<%= reply.floow %>楼•
+				     				<% var times = new Date() - reply.rTime;
+			                        console.log(times);
+			                        var timet;
+			                        if(Math.floor(times/1000)){
+			                          timet = '刚刚';
+			                        }
+			                        if(Math.floor(times/1000%60)){
+			                           timet = Math.floor(times/1000%60)+'秒之前';
+			                        }
+			                        if(Math.floor(times/1000/60%60)){
+			                          timet = Math.floor(times/1000/60%60)+'分之前';
+			                        }
+			                        if(Math.floor(times/1000/60/60%24)){
+			                           timet = Math.floor(times/1000/60/60%24)+'时之前';
+			                        }
+			                        if(Math.floor(times/1000/60/60/24)){
+			                          timet = Math.floor(times/1000/60/60/24)+'天之前';
+			                        }
+
+					                %>
+					               <%= timet %> 
+				     			</a>
+				     			<%= console.log(reply.floow) %>
+				    		</div>
+						    <div class="user_action">
+						   		<span>
+						        	<span class="glyphicon glyphicon-thumbs-up" title="喜欢" id="<%= reply._id %>"></span>
+						        	<!-- 从数据库显示 -->
+						        	<span class="up-count">
+						          		<%= reply.likePerson.length||'' %>
+						        	</span>
+						      	</span>
+						      
+							   	<span> 
+							   		<i class="fa fa-reply reply2_btn" title="回复"></i>
+							    </span>
+						    </div>
+				  		</div>
+						<div class="reply_content from-solarhell">
+						    <div class="markdown-text">
+						    	<%= reply.rContent %>
+							</div>
+				  		</div>
+				 	</div>
+			 	<%}) %>
+			</div>
+			  
+			<%} %>
+			
+
+			<!-- 回复 -->
+			<% if(user){ %>
+			<div class="panel">
+			    <div class="header">
+			      <span class="col_fade">添加回复</span>
+			    </div>
+			    <div class="inner reply">
+			      	<form id="reply_form" action="/topic/reply/<%= topicData._id %>" method="post">
+						<textarea name="rContent" class="editor" rows="20"></textarea>
+			         	<input class="span-primary submit_btn" type="submit" data-loading-text="回复中.." value="回复">
+					</form>
+			    </div>
+			</div>
+			<% } %>
+			</div>
+		</div>
+	<% }else{ %>
+		<p class="alert alert-danger">该帖子违规操作,已被系统屏蔽</p>
+	<% } %>
+</div>
+
+<script>
+	$('.glyphicon-thumbs-up').click(function(){
+		// alert(111)
+		// 获取当前点赞按钮对应的回复的_id的值
+		// alert($(this).attr('id'));
+		var id = $(this).attr('id');
+
+		// 获取要输入点赞数量的up-count
+		// console.log($(this).next());
+		var count = $(this).next();
+		var newNum = count.html();
+		// console.log(newNum);
+
+		// 发送ajax
+		$.get('/topic/reply/like/'+id,function(msg){
+			// alert(msg);
+			// console.log(msg);
+			if(msg=='nologin'){
+				// 弹框提示
+				alert('呵呵，你还没有登录呢...');
+
+				// 跳转
+				window.location.href = "/user/login";
+			}else{
+				// 判断返回的是什么
+				if(newNum==''){
+					newNum = 0;
+				}
+
+				// + 在现有的数量上+1
+				if(msg=='+'){
+					newNum++;
+				}else if(msg=='-'){
+					// - 在现有的数量上-1
+					newNum--;
+				}
+
+				// 如果newNum<=0，将newNum重置为空
+				if(newNum<=0){
+					newNum='';
+				}
+
+				// console.log(newNum);
+
+				// 赋值
+				count.html(newNum);
+
+			}
+		})
+	})
+
+</script>

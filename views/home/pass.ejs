@@ -1,0 +1,85 @@
+<!-- 加载公共的头部  -->
+<% include header %>
+
+	<!-- 主体部分 -->
+	<div id="main">
+		<!-- 右侧的关于的描述 -->
+		<div id="sidebar">
+			<div class="panel">
+				<div class="header">
+					<span class="col_fade">关于</span>
+				</div>
+				<div class="inner">
+					<p>CNode：Node.js专业中文社区</p>
+
+					<p>在这里你可以：</p>
+					<ul>
+						<li>向别人提出你遇到的问题</li>
+						<li>帮助遇到问题的人</li>
+						<li>分享自己的知识</li>
+						<li>和其它人一起进步</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+
+		<!-- 左侧内容部分 -->
+		<div id="content">
+			<div class="panel">
+				<div class="header">
+					<ul class="breadcrumb">
+						<li><a href="/">主页</a><span class="divider">/</span></li>
+						<li class="active">找回密码</li>
+					</ul>
+				</div>
+
+				<div class="inner">
+					<!-- 输出错误信息 -->
+					<% if(errMsg.length){ %>
+						<p class="alert alert-danger"><%= errMsg %></p>
+					<%	} %>
+					<% if(succ.length){ %>
+                    <p class="alert alert-info"><%= succ %></p>
+                	<%  } %>
+					<form id="signin_form" class="form-horizontal" action="/user/dopass" method="post">
+						<!-- 账户 -->
+						<div class="control-group">
+							<label class="control-label" for="name">用户名</label>
+							<div class="controls">
+								<input required class="input-xlarge" id="name" name="uname" size="30" type="text">
+							</div>
+						</div>
+						<!-- 邮箱 -->
+						<div class="control-group">
+							<label class="control-label" for="name">邮箱</label>
+							<div class="controls">
+								<input required class="input-xlarge" id="name" name="email" size="30" type="email">
+							</div>
+						</div>
+						<!-- 密码 -->
+						<div class="control-group">
+							<label class="control-label" for="pass">新密码</label>
+							<div class="controls">
+								<input required class="input-xlarge" id="pass" name="upwd" size="30" type="password">
+							</div>
+						</div>
+
+						<!-- 确认密码 -->
+						<div class="control-group">
+							<label class="control-label" for="pass">确认密码</label>
+							<div class="controls">
+								<input required class="input-xlarge" id="pass" name="reupwd" size="30" type="password">
+							</div>
+						</div>
+
+						<div class="form-actions">
+							<input class="span-primary" value="确定" type="submit">
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- 底部 -->
+	<% include footer %>

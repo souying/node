@@ -1,0 +1,1 @@
+{"options":{},"indexes":[{"v":1,"key":{"_id":1},"name":"_id_","ns":"bbs.bbs_applies"},{"v":1,"unique":true,"key":{"wname":1},"name":"wname_1","ns":"bbs.bbs_applies","background":true},{"v":1,"unique":true,"key":{"email":1},"name":"email_1","ns":"bbs.bbs_applies","background":true}]}
